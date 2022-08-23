@@ -60,7 +60,7 @@ for i in range(2, 5):
     for l in [90, -90, 180]:
       frames.append(rotate(img, l, resize=True))
 
-    print("\nImagem rotacionada")
+    print("\nImagem Rotacionada")
     writer = imageio.get_writer(f"imgrotate{i}.gif", mode="I")
     for idx, frame in enumerate(frames):
         plt.imshow(frame)
