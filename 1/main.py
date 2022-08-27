@@ -1,16 +1,17 @@
-# !pip install imageio numpy pandas opencv-python scikit-image matplotlib webcolors scipy
+# !pip install numpy pandas scikit-image matplotlib opencv-python scipy webcolors imageio
 
 import cv2
 from skimage.color import rgb2gray
 from skimage.transform import resize, rotate
 import matplotlib.pyplot as plt
 import imageio
+import numpy as np
 
-# from scipy.spatial import KDTree
-# from webcolors import (
-#     CSS3_HEX_TO_NAMES,
-#     hex_to_rgb,
-# )
+from scipy.spatial import KDTree
+from webcolors import (
+    CSS3_HEX_TO_NAMES,
+    hex_to_rgb,
+)
 
 # from google.colab.patches import cv2_imshow
 
@@ -24,14 +25,14 @@ for i in range(2, 5):
 
     img_info = img.shape
 
-    print(f"\nCor de um Pixel:\n{img[150, 150]}")
+    colors_aux = [[name, hex_to_rgb(hex)] for hex, name  in CSS3_HEX_TO_NAMES.items()]
+    c_pixel = img[150, 150]
+    kdt_db = KDTree([hex[1] for hex in colors_aux])
+    distance, index = kdt_db.query(c_pixel)
+    print(f"\nCor de um Pixel:\n{c_pixel} {colors_aux[index][0]}")
 
     # for j in range(img_info[0]):
     #   for k in range(img_info[1]):
-    #     colors_aux = [[name, hex_to_rgb(hex)] for hex, name  in CSS3_HEX_TO_NAMES.items()]
-    #     print(colors_aux)
-
-    #     kdt_db = KDTree([hex[1] for hex in colors_aux])
     #     distance, index = kdt_db.query(img[j][k])
     #     print(img[j][k], colors_aux[index][0])
 
@@ -46,9 +47,7 @@ for i in range(2, 5):
 
     print(f"\nMatriz (cinza)\n{gray}\n")
 
-    print(f"Máximo de pixels: {img.max()}")
-    print(f"Mínimo de pixels: {img.min()}")
-    print(f"Média de pixels: {img.mean()}")
+    print(f"[Máximo, Mínimo, Média] de pixels: [{img.max()}, {img.min()}, {img.mean()}]")
 
     print("\nImagem Redimensionada")
     resized = resize(img, (int(img_info[1]/2), int(img_info[0]/2)))
@@ -56,7 +55,6 @@ for i in range(2, 5):
     plt.show()
 
     frames = []
-
     for l in [90, -90, 180]:
       frames.append(rotate(img, l, resize=True))
 
@@ -65,5 +63,5 @@ for i in range(2, 5):
     for idx, frame in enumerate(frames):
         plt.imshow(frame)
         plt.show()
-        writer.append_data(frame)
+        writer.append_data(frame.astype(np.uint8))
     writer.close()
