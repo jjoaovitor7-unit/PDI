@@ -1,5 +1,3 @@
-# !pip install numpy pandas scikit-image matplotlib opencv-python scipy webcolors
-
 import cv2
 from skimage.color import rgb2gray
 from skimage.transform import resize

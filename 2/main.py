@@ -1,5 +1,3 @@
-# !pip install numpy pandas scikit-image matplotlib opencv-python
-
 from skimage import io
 import cv2
 import matplotlib.pyplot as plt
