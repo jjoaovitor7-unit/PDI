@@ -43,7 +43,7 @@ for i in enumerate(imgs):
   axs[1].set_yticks([])
 
   axs[0].imshow(img)
-  axs[1].imshow(negative_image(img).astype(np.uint8))
+  axs[1].imshow(negative_image(img))
   plt.show()
 
   h = get_hist(img, 256)

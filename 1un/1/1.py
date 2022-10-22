@@ -10,9 +10,6 @@ from webcolors import (
     hex_to_rgb,
 )
 
-# import numpy as np
-# from google.colab.patches import cv2_imshow
-
 for i in range(2, 5):
     img_name = f"imgs/img0{i}.jpg"
     print(f"\n{img_name}")
